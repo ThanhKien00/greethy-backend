@@ -1,0 +1,116 @@
+version: '3.9'
+
+networks:
+  greethy-network:
+    name: greethy-network
+    driver: bridge
+
+services:
+  kafka1:
+    image: bitnami/kafka:3.8.0
+    hostname: kafka1
+    container_name: kafka1
+    ports:
+      - '9092:9092'
+      - '29092:29092'
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_CFG_NODE_ID: 1
+      KAFKA_ENABLE_KRAFT: 'yes'
+      KAFKA_CFG_AUTO_CREATE_TOPICS_ENABLE: 'true'
+      KAFKA_CFG_PROCESS_ROLES: broker,controller
+      KAFKA_CFG_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_CFG_LISTENERS: PLAINTEXT://:9092,CONTROLLER://:9093,EXTERNAL://:29092
+      KAFKA_CFG_ADVERTISED_LISTENERS: PLAINTEXT://127.0.0.1:9092,EXTERNAL://kafka1:29092
+      KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT,EXTERNAL:PLAINTEXT
+      KAFKA_CFG_CONTROLLER_QUORUM_VOTERS: 1@127.0.0.1:9093
+      ALLOW_PLAINTEXT_LISTENER: 'yes'
+      BITNAMI_DEBUG: yes
+    networks:
+      - greethy-network
+    volumes:
+      - kafka1_data:/bitnami/kafka
+  kafka-ui:
+    image: provectuslabs/kafka-ui:latest
+    hostname: kafka-ui
+    container_name: kafka-ui
+    depends_on:
+     - kafka1
+    ports:
+      - '8090:8080'
+    environment:
+      KAFKA_CLUSTERS_0_NAME: local
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka1:9092
+    networks:
+      - greethy-network
+
+  # DATABASE
+  mysql:
+    container_name: greethy-mysql
+    image: bitnami/mysql:latest
+    ports:
+      - '3306:3306'
+    environment:
+      MYSQL_ROOT_USER: ${MYSQL_ROOT_USER}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    networks:
+      - greethy-network
+    volumes:
+      - mysql_data:/bitnami/mysql/data
+  postgres_kc:
+    container_name: postgres-kc
+    hostname: postgres-kc
+    image: bitnami/postgresql:latest
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRESQL_USERNAME: ${POSTGRES_KC_USERNAME}
+      POSTGRESQL_PASSWORD: ${POSTGRES_KC_PASSWORD}
+      POSTGRESQL_DATABASE: ${POSTGRES_KC_DB}
+    networks:
+      - greethy-network
+    volumes:
+      - postgres_data:/bitnami/postgresql
+  redis:
+    container_name: greethy-redis
+    image: bitnami/redis
+    restart: always
+    environment:
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+    ports:
+      - '6379:6379'
+    volumes:
+      - redis_data:/bitnami/redis/data
+
+  #AUTHSERVER_KEYCLOAK
+  idp_keycloak:
+    container_name: greethy-keycloak
+    image: quay.io/keycloak/keycloak:25.0.4
+    ports:
+      - '8180:8080'
+    command:
+      - start-dev
+      #- --import-realm
+    environment:
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+      KC_PROXY: passthrough
+      KC_DB: postgres
+      KC_DB_URL: jdbc:postgresql://postgres-kc:5432/${POSTGRES_KC_DB}
+      KC_DB_USERNAME: ${POSTGRES_KC_USERNAME}
+      KC_DB_PASSWORD: ${POSTGRES_KC_PASSWORD}
+      KC_HEALTH_ENABLED: true
+    depends_on:
+      - postgres_kc
+    networks:
+      - greethy-network
+    volumes:
+      - ./keycloak/realm-export.json:/opt/keycloak/data/import/realm.json
+      - ./keycloak/themes/greethy/theme:/opt/keycloak/theme
+
+volumes:
+  kafka1_data:
+    driver: local
+  mysql_data:
+  postgres_data:
+  redis_data:
