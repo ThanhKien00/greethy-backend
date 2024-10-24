@@ -30,4 +30,6 @@ public class Account {
 
     private String modifiedBy;
 
+    private AccountProfile profile;
+
 }

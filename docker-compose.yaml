@@ -73,8 +73,7 @@ services:
       - postgres_data:/bitnami/postgresql
   redis:
     container_name: greethy-redis
-    image: bitnami/redis
-    restart: always
+    image: bitnami/redis:latest
     environment:
       REDIS_PASSWORD: ${REDIS_PASSWORD}
     ports:

@@ -8,23 +8,31 @@
 		<version>3.3.4</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
+	<packaging>pom</packaging>
+
 	<name>greethy</name>
 	<artifactId>greethy</artifactId>
 	<groupId>com.greethy</groupId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>pom</packaging>
-	<description>Parent Module for centralize dependencies</description>
+	<url>https://github.com/Greethy</url>
+	<description>The Greethy Project</description>
 
-	<url/>
+	<developers>
+		<developer>
+			<name>ThanhKien</name>
+			<url>https://github.com/ThanhKien00</url>
+			<timezone>UTC+7</timezone>
+		</developer>
+		<developer>
+			<name>Nguyen Thanh Chung</name>
+		</developer>
+	</developers>
 	<licenses>
 		<license>
 			<name>Apache License, Version 2.0</name>
 			<url>https://www.apache.org/licenses/LICENSE-2.0</url>
 		</license>
 	</licenses>
-	<developers>
-		<developer/>
-	</developers>
 	<scm>
 		<connection/>
 		<developerConnection/>
@@ -40,6 +48,7 @@
 
 	<modules>
 		<module>greethy-core</module>
+		<module>greethy-gateway</module>
 		<module>greethy-account</module>
 	</modules>
 
@@ -49,11 +58,14 @@
 			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
 
+		<!-- Dev Tools -->
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<optional>true</optional>
 		</dependency>
+
+		<!-- Testing libraries -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
