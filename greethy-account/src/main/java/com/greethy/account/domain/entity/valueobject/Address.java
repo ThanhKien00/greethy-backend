@@ -1,4 +1,4 @@
-package com.greethy.account.domain.valueobject;
+package com.greethy.account.domain.entity.valueobject;
 
 public record Address (
         String country,

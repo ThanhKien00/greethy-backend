@@ -1,7 +1,7 @@
 package com.greethy.account.domain.entity;
 
-import com.greethy.account.domain.valueobject.Address;
-import com.greethy.account.domain.valueobject.Gender;
+import com.greethy.account.domain.entity.valueobject.Address;
+import com.greethy.account.domain.entity.valueobject.Gender;
 import lombok.Data;
 
 import java.util.Date;

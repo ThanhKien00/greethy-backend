@@ -1,6 +1,6 @@
 package com.greethy.account.domain.service;
 
-import com.greethy.account.application.rest.model.command.UserLoginCommand;
+import com.greethy.account.application.rest.model.command.AuthenticateUser;
 import com.greethy.account.application.rest.model.response.LoginResponse;
 import com.greethy.account.domain.port.in.AuthService;
 import com.greethy.account.infrastructure.adapter.webclient.KeycloakClient;
@@ -16,7 +16,7 @@ public class AuthServiceImpl implements AuthService {
 
 
     @Override
-    public Mono<LoginResponse> getToken(UserLoginCommand command) {
+    public Mono<LoginResponse> getToken(AuthenticateUser command) {
         return null;
     }
 }

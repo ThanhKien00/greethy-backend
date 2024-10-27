@@ -30,6 +30,7 @@ spring:
         jwt:
           issuer-uri: ${IDP_ISSUER_URI:http://localhost:8180/realms/greethy}
           jwk-set-uri: ${IDP_JWK_SET_URI:http://localhost:8180/realms/greethy/protocol/openid-connect/certs}
+
 #keycloak:
 #  client-id:
 #  client-secret:

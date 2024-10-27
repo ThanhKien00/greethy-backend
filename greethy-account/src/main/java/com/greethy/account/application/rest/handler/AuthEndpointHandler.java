@@ -1,6 +1,7 @@
 package com.greethy.account.application.rest.handler;
 
-import com.greethy.account.application.rest.model.command.UserLoginCommand;
+import com.greethy.account.application.rest.model.command.CreateAccount;
+import com.greethy.account.application.rest.model.command.AuthenticateUser;
 import com.greethy.account.application.rest.model.response.LoginResponse;
 import com.greethy.account.domain.port.in.AuthService;
 import com.greethy.core.model.response.DataResponse;
@@ -17,9 +18,8 @@ public class AuthEndpointHandler {
     private final ObjectValidator validator;
     private final AuthService authService;
 
-
     public Mono<ServerResponse> login(ServerRequest request) {
-        return request.bodyToMono(UserLoginCommand.class)
+        return request.bodyToMono(AuthenticateUser.class)
                 .doOnNext(validator::validate)
                 .flatMap(authService::getToken)
                 .map(response -> DataResponse.<LoginResponse>builder()
@@ -34,7 +34,9 @@ public class AuthEndpointHandler {
     }
 
     public Mono<ServerResponse> signup(ServerRequest request) {
-        return null;
+        return request.bodyToMono(CreateAccount.class)
+                .flatMap(command -> ServerResponse.ok().bodyValue(command));
+
     }
 
 }
