@@ -1,4 +1,4 @@
-package com.greethy.account.application.rest.model.response;
+package com.greethy.account.application.rest.handler.model.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;

@@ -31,7 +31,8 @@ public class EndpointsRouter {
                         .POST("/logout", accept(MediaType.APPLICATION_JSON), authEndpointHandler::logout)
                         .onError(ServerWebInputException.class, exceptionHandler::handleException))
                 .path("/v0/me", builder -> builder
-                        .GET("", accountEndpointHandler::getCurrentAccount)
+                        .GET("", accept(MediaType.APPLICATION_JSON), accountEndpointHandler::getCurrentAccount)
+                        .PUT("", accept(MediaType.APPLICATION_JSON), accountEndpointHandler::updateCurrentAccountProfile)
                         .build())
                 .build();
     }

@@ -1,7 +1,7 @@
 package com.greethy.account.domain.service;
 
-import com.greethy.account.application.rest.model.command.AuthenticateUser;
-import com.greethy.account.application.rest.model.response.LoginResponse;
+import com.greethy.account.domain.message.command.AuthenticateUser;
+import com.greethy.account.application.rest.handler.model.response.LoginResponse;
 import com.greethy.account.domain.port.in.AuthService;
 import com.greethy.account.infrastructure.adapter.webclient.KeycloakClient;
 import lombok.RequiredArgsConstructor;

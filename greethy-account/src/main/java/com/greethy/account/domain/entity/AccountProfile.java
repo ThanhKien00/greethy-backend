@@ -10,17 +10,11 @@ import java.util.Date;
 public class AccountProfile {
 
     private Long id;
-
     private String imageUrl;
-
     private Date dateOfBirth;
-
     private Gender gender;
-
     private String bio;
-
     private Address address;
-
     private Account account;
 
 }

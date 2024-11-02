@@ -27,4 +27,9 @@ public class AccountEndpointHandler {
                 .flatMap(_ -> ServerResponse.noContent().build());
     }
 
+    public Mono<ServerResponse> updateCurrentAccountProfile(ServerRequest request) {
+        return null;
+
+    }
+
 }

@@ -1,4 +1,4 @@
-package com.greethy.account.application.rest.handler;
+package com.greethy.account.infrastructure.config.validate;
 
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validator;
