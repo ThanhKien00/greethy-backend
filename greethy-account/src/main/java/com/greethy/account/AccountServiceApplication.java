@@ -1,6 +1,5 @@
 package com.greethy.account;
 
-import com.greethy.account.config.security.keycloak.KeycloakProperties;
 import com.greethy.account.user.infrastructure.adapter.UserKeycloakAdapter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,7 +14,6 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 @SpringBootApplication(scanBasePackages = {"com.greethy.core", "com.greethy.account"})
 public class AccountServiceApplication implements CommandLineRunner {
 
-	private final KeycloakProperties keycloakProperties;
 	private final UserKeycloakAdapter userKeycloakAdapter;
 
 	public static void main(String[] args) {
@@ -23,8 +21,10 @@ public class AccountServiceApplication implements CommandLineRunner {
 	}
 
 	@Override
-	public void run(String... args) throws Exception {
+	public void run(String... args) {
 		userKeycloakAdapter.getUsers()
 				.subscribe(returnValue -> log.info("get keycloak users: {}", returnValue));
+		userKeycloakAdapter.exists("greethy")
+				.subscribe(exists -> log.info("exists: {}", exists));
 	}
 }

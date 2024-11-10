@@ -44,7 +44,7 @@ spring:
           jwk-set-uri: ${IDP_JWK_SET_URI:http://localhost:8180/realms/greethy/protocol/openid-connect/certs}
 
 keycloak:
-  url: http://localhost:8180
+  base-url: http://localhost:8180
   realm: greethy
   grant_type: client_credentials
   client-id: greethy_client
