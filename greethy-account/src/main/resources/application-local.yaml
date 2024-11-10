@@ -1,7 +1,6 @@
 server:
   port: 8081
 
-
 spring:
   r2dbc:
     url: r2dbc:mysql://localhost:3306/accountDB
@@ -26,11 +25,28 @@ spring:
 
   security:
     oauth2:
+      client:
+        provider:
+          keycloak:
+            issuer-uri: ${CLIENT_ISSUER_URI:http://localhost:8180/realms/greethy}
+            user-name-attribute: preferred_username
+        registration:
+          keycloak:
+            client-id: greethy_client
+            client-secret: enaHnvSF0SAVt1s5AuZtvT5JH7HVAb5U
+            authorization-grant-type: client_credentials
+            scope:
+              - openid
+
       resourceserver:
         jwt:
           issuer-uri: ${IDP_ISSUER_URI:http://localhost:8180/realms/greethy}
           jwk-set-uri: ${IDP_JWK_SET_URI:http://localhost:8180/realms/greethy/protocol/openid-connect/certs}
 
-#keycloak:
-#  client-id:
-#  client-secret:
+keycloak:
+  url: http://localhost:8180
+  realm: greethy
+  grant_type: client_credentials
+  client-id: greethy_client
+  client-secret: enaHnvSF0SAVt1s5AuZtvT5JH7HVAb5U
+  scope: openid
