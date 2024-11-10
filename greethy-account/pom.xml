@@ -15,6 +15,7 @@
 
 	<properties>
 		<mapstruct.version>1.6.2</mapstruct.version>
+		<common.validator.version>1.9.0</common.validator.version>
 	</properties>
 	<repositories>
 		<repository>
@@ -31,6 +32,12 @@
 			<version>1.0.0-SNAPSHOT</version>
 			<scope>compile</scope>
 		</dependency>
+		<dependency>
+			<groupId>commons-validator</groupId>
+			<artifactId>commons-validator</artifactId>
+			<version>${common.validator.version}</version>
+		</dependency>
+
 		<!-- Architecture Style -->
 		<dependency>
 			<groupId>org.springframework.modulith</groupId>
@@ -98,6 +105,7 @@
 			<artifactId>mapstruct-processor</artifactId>
 			<version>${mapstruct.version}</version>
 		</dependency>
+
 		<!-- Testing -->
 		<dependency>
 			<groupId>io.projectreactor</groupId>

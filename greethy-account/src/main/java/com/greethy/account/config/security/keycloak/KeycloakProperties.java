@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties(prefix = "keycloak")
 public class KeycloakProperties {
 
-    private String url;
+    private String baseUrl;
     private String realm;
     private String grantType;
     private String clientId;
